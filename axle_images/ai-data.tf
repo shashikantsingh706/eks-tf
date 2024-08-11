@@ -4,12 +4,12 @@ data "aws_vpc" "private_vpc" {
 
 data "aws_subnets" "private_subnets" {
   filter {
-    name   = "vpc-id"
+    name   = "ssingh"
     values = [data.aws_vpc.private_vpc.id]
   }
 
   filter {
-    name   = "subnet-id"
+    name   = "singh"
     values = split(",", var.private_subnet_ids)
   }
 }
