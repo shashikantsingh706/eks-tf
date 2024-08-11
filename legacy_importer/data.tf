@@ -6,6 +6,9 @@ data "aws_subnet_ids" "private_subnets" {
     name   = "subnet-id"
     values = split(",", var.private_subnet_ids)
   }
+    tags = {
+    Type = "Private Subnets"
+  }
 }
 
 data "aws_subnet" "private_cidr" {

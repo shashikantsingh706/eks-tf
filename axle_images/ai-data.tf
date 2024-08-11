@@ -4,18 +4,15 @@ data "aws_vpc" "private_vpc" {
 
 data "aws_subnets" "private_subnets" {
   filter {
-    name   = "ssingh"
+    name   = "vpc-id"
     values = [data.aws_vpc.private_vpc.id]
   }
-
-  filter {
-    name   = "singh"
-    values = split(",", var.private_subnet_ids)
+  tags = {
+    Type = "Private Subnets"
   }
 }
 
-
-data "aws_subnet" "private_cidr" {
+data "aws_subnet" "private_subnets" {
   for_each = toset(data.aws_subnets.private_subnets.ids)
   id       = each.value
 }

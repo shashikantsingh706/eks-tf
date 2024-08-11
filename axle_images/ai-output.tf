@@ -24,10 +24,10 @@ output "cluster_iam_role_name" {
   value       = aws_iam_role.eks_master_role.name
 }
 
-output "aws_private_subnets" {
-  value = [for s in data.aws_subnets.private_subnets : s.private_subnets]
-}
+#output "aws_private_subnets" {
+ # value = [for s in data.aws_subnets.private_subnets : s.private_subnets]
+#}
 
 output "subnet_cidr_blocks" {
-  value = [for s in data.aws_subnet.private_cidr : s.cidr_block]
+  value = [for s in data.aws_subnet.private_subnets : s.cidr_block]
 }
