@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: legacy-imp
+  name: legacy-imp-ingress
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:028563536761:certificate/8fdf0618-23fc-4fbf-9acf-d1d801444883"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/success-codes: 200-445
+spec:
+  rules:
+  - host: legacyimporterprodtest.data-axle.com
+    http:
+      paths:  
+      - backend: 
+          service:
+            name:  legacy-imp
+            port: 
+              number: 3000
+        path: 
+        pathType: ImplementationSpecific

@@ -1,0 +1,35 @@
+name: Terraform Axle-images CI
+on:
+ push:
+  branches:
+    - "eks-axle-images-tf"
+  
+jobs:
+  terraform:
+    name: Verify Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+          aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+          aws-region: us-east-1
+
+      - name: Configure AWS Profile
+        uses: Fooji/create-aws-profile-action@11446e09949aa9812361b5fbe72c8b5a7e44bdd2
+        with:
+          profile: default
+          region: us-east-1
+          key: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+          secret: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+
+      - name: Verification of Terraform
+        run: |
+         cd axle_images
+         terraform fmt
+         terraform init
+         terraform plan
