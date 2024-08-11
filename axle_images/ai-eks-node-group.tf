@@ -344,7 +344,7 @@ resource "aws_eks_node_group" "nodes_general" {
   cluster_name    = aws_eks_cluster.eks_cluster.name
   node_group_name = "axle-images-node-group"
   node_role_arn   = aws_iam_role.worker_nodes_role.arn
-  subnet_ids      = data.aws_subnet_ids.private_subnets.ids
+  subnet_ids      = data.aws_subnets.private_subnets.ids
 
   scaling_config {
     desired_size = 2
