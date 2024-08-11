@@ -31,7 +31,7 @@ resource "aws_eks_cluster" "eks_cluster" {
     endpoint_private_access = var.cluster_endpoint_private_access
     endpoint_public_access  = var.cluster_endpoint_public_access
     public_access_cidrs     = var.cluster_endpoint_public_access_cidrs
-    subnet_ids              = data.aws_subnet_ids.private_subnets.ids
+    subnet_ids              = data.aws_subnets.private_subnets.ids
 
   }
   depends_on = [aws_iam_role_policy_attachment.amazon_eks_cluster_policy, aws_cloudwatch_log_group.eks_cluster_cloudwatch]
