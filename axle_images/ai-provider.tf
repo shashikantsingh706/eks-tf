@@ -7,8 +7,8 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "axle-infra"
-    key    = "terraform-all-statefile/axle_images/terraform.tfstate"
+    bucket = "terraform-all-statefile"
+    key    = "axle_images/terraform.tfstate"
     region = "us-east-1"
   }
 }
