@@ -1,4 +1,4 @@
-name: Terraform Axle-images CICD
+name: Terraform Axle-images CICD destroy
 on:
   workflow_dispatch:
 # push:
