@@ -1,4 +1,4 @@
-name: Terraform Axle-images CI
+name: Terraform Axle-images CICD
 on:
   workflow_dispatch:
 # push:
