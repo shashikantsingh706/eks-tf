@@ -374,6 +374,6 @@ resource "aws_eks_node_group" "nodes_general" {
   ]
   tags = {
  #   map-migrated = "d-server-028bqm2pgp95c2"
-    app          = axle-images-eks
+    app          = "axle-images-eks"
   }
 }
