@@ -1,71 +1,71 @@
-name: Ruby QA CICD
-on:
- push:
-  branches:
-    - "main"  ## update branch qa
+# name: Ruby QA CICD
+# on:
+#  push:
+#   branches:
+#     - "main"  ## update branch qa
   
-jobs:
-  terraform:
-    name: Verify Terraform
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+# jobs:
+#   terraform:
+#     name: Verify Terraform
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
       
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
-          aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
-          aws-region: us-east-1
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+#           aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+#           aws-region: us-east-1
       
-      - name: Configure AWS Profile
-        uses: Fooji/create-aws-profile-action@11446e09949aa9812361b5fbe72c8b5a7e44bdd2
-        with:
-          profile: default
-          region: us-east-1
-          key: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
-          secret: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+#       - name: Configure AWS Profile
+#         uses: Fooji/create-aws-profile-action@11446e09949aa9812361b5fbe72c8b5a7e44bdd2
+#         with:
+#           profile: default
+#           region: us-east-1
+#           key: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+#           secret: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
 
-      - name: Verification of Terraform
-        run: |
-         cd legacy_importer
-         terraform fmt
-         terraform init
-         terraform apply  --auto-approve 
+#       - name: Verification of Terraform
+#         run: |
+#          cd legacy_importer
+#          terraform fmt
+#          terraform init
+#          terraform apply  --auto-approve 
 
-  eks-setup:
-    name: Apply manifests
-    runs-on: ubuntu-latest
-    needs: [terraform]
-    steps:
-      - uses: actions/checkout@v2
+#   eks-setup:
+#     name: Apply manifests
+#     runs-on: ubuntu-latest
+#     needs: [terraform]
+#     steps:
+#       - uses: actions/checkout@v2
       
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
-          aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
-          aws-region: us-east-1
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+#           aws-secret-access-key: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+#           aws-region: us-east-1
 
-      - name: Configure AWS Profile
-        uses: Fooji/create-aws-profile-action@11446e09949aa9812361b5fbe72c8b5a7e44bdd2
-        with:
-          profile: default
-          region: us-east-1
-          key: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
-          secret: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
+#       - name: Configure AWS Profile
+#         uses: Fooji/create-aws-profile-action@11446e09949aa9812361b5fbe72c8b5a7e44bdd2
+#         with:
+#           profile: default
+#           region: us-east-1
+#           key: ${{secrets.AWS_AXLE_PLATFORM_ACCESS_KEY}}
+#           secret: ${{secrets.AWS_AXLE_PLATFORM_SECRET_KEY}}
            
-      - name: Configure EKS Cluster
-        run: |
-          aws eks update-kubeconfig --region us-east-1 --name  legacy-imp
-          cd legacy_importer
-          kubectl apply -f cluster-autoscaler.yaml
-          kubectl apply -f lb.yaml
-          kubectl apply -f legacy-imp-qa/ns.yaml
-          kubectl apply -f legacy-imp-qa/ingress.yaml
-          kubectl apply -f pod-log-insight.yaml
-          kubectl apply -f legacy-imp-qa/svc.yaml
-          kubectl apply -f cloudwatch/cloudwatch-setup.yaml
-          kubectl apply -f legacy-imp/ns.yaml
-          kubectl apply -f legacy-imp/ingress.yaml
-          kubectl apply -f legacy-imp/svc.yaml
+#       - name: Configure EKS Cluster
+#         run: |
+#           aws eks update-kubeconfig --region us-east-1 --name  legacy-imp
+#           cd legacy_importer
+#           kubectl apply -f cluster-autoscaler.yaml
+#           kubectl apply -f lb.yaml
+#           kubectl apply -f legacy-imp-qa/ns.yaml
+#           kubectl apply -f legacy-imp-qa/ingress.yaml
+#           kubectl apply -f pod-log-insight.yaml
+#           kubectl apply -f legacy-imp-qa/svc.yaml
+#           kubectl apply -f cloudwatch/cloudwatch-setup.yaml
+#           kubectl apply -f legacy-imp/ns.yaml
+#           kubectl apply -f legacy-imp/ingress.yaml
+#           kubectl apply -f legacy-imp/svc.yaml
