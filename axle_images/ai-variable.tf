@@ -13,13 +13,13 @@ variable "vpc" {
 
 variable "private_subnet_ids" {
   description = "Subnet list for private resources (e.g. ecs)"
-  default     = "subnet-83b962f5,subnet-080e8cd22822f17cb,subnet-62668948"
+  default     = "subnet-077b22e983b606a93,subnet-0b2b48999fce64e4a"
   type        = string
 }
 
 variable "public_subnet_ids" {
   description = "Subnet list for private resources (e.g. eks)"
-  default     = "subnet-fe1287c3,subnet-81b962f7,subnet-63668949"
+  default     = "subnet-090f2069d6a8e1e9b,subnet-049263cb60ea01382"
 
 }
 

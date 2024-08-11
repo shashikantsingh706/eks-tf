@@ -356,12 +356,12 @@ resource "aws_eks_node_group" "nodes_general" {
   capacity_type        = "ON_DEMAND"
   disk_size            = 50
   force_update_version = false
-  instance_types       = ["t3.xlarge"]
+  instance_types       = ["t2.micro"]
   version              = "1.29"
 
   remote_access {
 
-    ec2_ssh_key = "ssingh1"
+    ec2_ssh_key = "terraform-key"
   }
   update_config {
     max_unavailable = 1
