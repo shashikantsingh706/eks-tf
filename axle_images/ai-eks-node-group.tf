@@ -373,7 +373,7 @@ resource "aws_eks_node_group" "nodes_general" {
     aws_iam_role_policy_attachment.amazon_ec2_container_registry_read_only,
   ]
   tags = {
-    map-migrated = "d-server-028bqm2pgp95c2"
+ #   map-migrated = "d-server-028bqm2pgp95c2"
     app          = axle-images-eks
   }
 }

@@ -21,7 +21,7 @@ resource "aws_iam_role_policy_attachment" "amazon_eks_cluster_policy" {
   role       = aws_iam_role.eks_master_role.name
 }
 
-resource "eks_cluster" "eks_cluster" {
+resource "aws_eks_cluster" "eks_cluster" {
   name                      = axle-images
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllermanager", "scheduler"]
   role_arn                  = aws_iam_role.eks_master_role.arn
